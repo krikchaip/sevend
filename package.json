@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "fluture": "^8.0.2",
     "ramda": "^0.25.0",
     "vue": "^2.4.2",
     "vue-electron": "^1.0.6",
