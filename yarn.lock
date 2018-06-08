@@ -25,6 +25,10 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
+"@mdi/font@^2.4.85":
+  version "2.4.85"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-2.4.85.tgz#f257a2c3ed1dec3023f2dc12cd9210fab572ab42"
+
 "@types/node@^8.0.24":
   version "8.10.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.18.tgz#eb9ad8b0723d13fa9bc8b42543e3661ed805f2bb"

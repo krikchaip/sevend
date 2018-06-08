@@ -1,0 +1,4 @@
+.unselectable {
+  cursor: default;
+  user-select: none;
+}
