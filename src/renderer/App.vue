@@ -3,7 +3,6 @@
     <v-navigation-drawer
       app
       clipped
-      fixed
       width="250"
       style="z-index: 3"
       :permanent="menu"
@@ -13,20 +12,33 @@
       app
       clipped-left
       dark
-      fixed
       color="info"
       height="56"
     >
       <v-toolbar-side-icon @click="menu = !menu">
         <v-icon>mdi-menu</v-icon>
       </v-toolbar-side-icon>
-      <v-toolbar-title>Menu Title</v-toolbar-title>
+      <v-toolbar-title>Projects</v-toolbar-title>
       <v-spacer/>
+      <v-menu left :nudge-bottom="50">
+        <v-btn icon slot="activator">
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+        <v-list dense>
+          <v-list-tile @click="">
+            <v-list-tile-title>New project</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="">
+            <v-list-tile-title>From existing compose file</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
     </v-toolbar>
     <v-content>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis, itaque?
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, accusantium?
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, adipisci!
+      <v-container fill-height>
+        <v-layout>
+        </v-layout>
+      </v-container>
     </v-content>
   </v-app>
 </template>
