@@ -36,8 +36,7 @@
     </v-toolbar>
     <v-content>
       <v-container fill-height>
-        <v-layout>
-        </v-layout>
+        <empty-state-projects/>
       </v-container>
     </v-content>
   </v-app>
@@ -46,6 +45,9 @@
 <script>
   export default {
     name: 'App',
+    components: {
+      EmptyStateProjects: require('@/components/EmptyStateProjects').default
+    },
     data: () => ({
       menu: false
     })
