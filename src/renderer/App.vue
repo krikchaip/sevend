@@ -20,37 +20,49 @@
       </v-toolbar-side-icon>
       <v-toolbar-title>Projects</v-toolbar-title>
       <v-spacer/>
-      <v-menu left :nudge-bottom="50">
-        <v-btn icon slot="activator">
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-        <v-list dense>
-          <v-list-tile @click="">
-            <v-list-tile-title>New project</v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile @click="">
-            <v-list-tile-title>From existing compose file</v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
+      <projects-button-create
+        @import-error="notifyError"
+        @import-success="notifySuccess"
+      />
     </v-toolbar>
     <v-content>
       <v-container fill-height>
-        <empty-state-projects/>
+        <projects-empty-state/>
+        <v-snackbar
+          v-model="snackbar"
+          bottom
+          right
+          :timeout="3000"
+        >
+          {{ notifyMessage }}
+          <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+        </v-snackbar>
       </v-container>
     </v-content>
   </v-app>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+
   export default {
     name: 'App',
     components: {
-      EmptyStateProjects: require('@/components/EmptyStateProjects').default
+      ProjectsButtonCreate: require('@/components/ProjectsButtonCreate').default,
+      ProjectsEmptyState: require('@/components/ProjectsEmptyState').default
     },
     data: () => ({
-      menu: false
-    })
+      menu: false,
+      notifyMessage: null,
+      snackbar: false
+    }),
+    methods: {
+      notifyError(error) {},
+      notifySuccess(message) {
+        this.notifyMessage = message
+        this.snackbar = true
+      }
+    }
   }
 </script>
 
