@@ -43,8 +43,6 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-
   export default {
     name: 'App',
     components: {
@@ -56,7 +54,11 @@
       notifyMessage: null,
       snackbar: false
     }),
+    created() {
+      this.$store.dispatch('init')
+    },
     methods: {
+      // TODO: to be choosing which error state component should fit
       notifyError(error) {},
       notifySuccess(message) {
         this.notifyMessage = message

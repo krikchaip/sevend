@@ -1,3 +1,3 @@
 export default {
-  ADD_PROJECTS(state, value) { state.appProjects.push(value) }
+  SET_PROJECTS(state, value) { state.appProjects = value }
 }
