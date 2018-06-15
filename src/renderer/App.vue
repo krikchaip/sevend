@@ -12,7 +12,7 @@
       app
       clipped-left
       dark
-      color="info"
+      color="primary"
       height="56"
     >
       <v-toolbar-side-icon @click="menu = !menu">
@@ -27,7 +27,7 @@
     </v-toolbar>
     <v-content>
       <v-container fill-height>
-        <projects-empty-state/>
+        <projects-list/>
         <v-snackbar
           v-model="snackbar"
           bottom
@@ -47,7 +47,7 @@
     name: 'App',
     components: {
       ProjectsButtonCreate: require('@/components/ProjectsButtonCreate').default,
-      ProjectsEmptyState: require('@/components/ProjectsEmptyState').default
+      ProjectsList: require('@/components/ProjectsList').default
     },
     data: () => ({
       menu: false,
@@ -71,4 +71,5 @@
 <style>
   @import url('assets/styles.css');
   @import url('/node_modules/@mdi/font/css/materialdesignicons.min.css');
+  @import url('/node_modules/roboto-fontface/css/roboto/roboto-fontface.css');
 </style>

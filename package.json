@@ -59,6 +59,7 @@
     "fluture": "^8.0.2",
     "js-yaml": "^3.12.0",
     "ramda": "^0.25.0",
+    "roboto-fontface": "^0.9.0",
     "vue": "^2.4.2",
     "vue-electron": "^1.0.6",
     "vue-router": "^2.5.3",

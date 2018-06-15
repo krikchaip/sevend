@@ -1,3 +1,5 @@
+::-webkit-scrollbar { display: none }
+
 .unselectable {
   cursor: default;
   user-select: none;
