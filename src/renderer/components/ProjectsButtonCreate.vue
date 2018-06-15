@@ -4,9 +4,6 @@
       <v-icon>mdi-plus</v-icon>
     </v-btn>
     <v-list dense>
-      <v-list-tile @click="">
-        <v-list-tile-title>New project</v-list-tile-title>
-      </v-list-tile>
       <v-list-tile @click="importComposeFile">
         <v-list-tile-title>From existing compose file</v-list-tile-title>
       </v-list-tile>
@@ -35,7 +32,11 @@
     })
   })
 
-  /** `readFileM :: Path -> Options -> Future e Buffer` */
+  /**
+   * `readFileM :: Path -> Options -> Future e Buffer`
+   *
+   * ps. "Path" and "Options" are from fs.readFile
+   */
   const readFileM = Future.encaseN2(fs.readFile)
 
   /** `parseYaml :: String -> Future YAMLException Object` */
@@ -43,13 +44,35 @@
     Future.encase(yaml.safeLoad, s)
     .mapRej(_.assoc('message', 'Compose file corrupted'))
 
+  /** `loadComposeConfig :: String -> Future e Object` */
+  const loadComposeConfig = composePath =>
+    readFileM(composePath, 'utf8')
+    .chain(parseYaml)
+
+  /** `addProjectPath :: String -> Object -> Object` */
+  const addProjectPath = _.pipe(
+    _.split('/'),
+    _.dropLast(1),
+    _.join('/'),
+    _.assoc('project_path')
+  )
+
+  /** `addProjectName :: String -> Object -> Object` */
+  const addProjectName = _.pipe(
+    _.split('/'),
+    _.nth(-2),
+    _.assoc('project_name')
+  )
+
   export default {
     name: 'ProjectsButtonCreate',
     methods: {
       importComposeFile() {
         openComposeFileDialog
-        .chain(name => readFileM(name, 'utf8'))
-        .chain(parseYaml)
+        .chain(composePath =>
+          loadComposeConfig(composePath)
+          .map(addProjectPath(composePath))
+          .map(addProjectName(composePath)))
         .fork(e => this.$emit('import-error', e),
               v => {
                 this.$emit('import-success', 'Project has been imported')

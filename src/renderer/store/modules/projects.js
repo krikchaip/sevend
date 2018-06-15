@@ -1,9 +1,14 @@
+import { remote } from 'electron'
+
+const { getGlobal: G } = remote
+
 export default {
   namespaced: true,
   actions: {
     async create({ commit, rootState }, projectDetail) {
-      console.log(rootState.appProjects)
-      commit('ADD_PROJECTS', projectDetail, { root: true })
+      let appProjects = rootState.appProjects.concat([ projectDetail ])
+      G('data').set('appProjects', appProjects)
+      commit('SET_PROJECTS', appProjects, { root: true })
     }
   }
 }
