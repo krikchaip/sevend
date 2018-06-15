@@ -32,10 +32,10 @@
           v-model="snackbar"
           bottom
           right
-          :timeout="3000"
+          :timeout="snackbarTimeout"
         >
           {{ notifyMessage }}
-          <v-btn flat color="pink" @click.native="snackbar = false">Close</v-btn>
+          <v-btn flat color="pink accent-2" @click.native="snackbar = false">Close</v-btn>
         </v-snackbar>
       </v-container>
     </v-content>
@@ -52,16 +52,22 @@
     data: () => ({
       menu: false,
       notifyMessage: null,
-      snackbar: false
+      snackbar: false,
+      snackbarTimeout: 0
     }),
     created() {
       this.$store.dispatch('init')
     },
     methods: {
-      // TODO: to be choosing which error state component should fit
-      notifyError(error) {},
+      notifyError({ message, name }) {
+        console.error(message)
+        this.notifyMessage = message
+        this.snackbarTimeout = 0
+        this.snackbar = true
+      },
       notifySuccess(message) {
         this.notifyMessage = message
+        this.snackbarTimeout = 3000
         this.snackbar = true
       }
     }

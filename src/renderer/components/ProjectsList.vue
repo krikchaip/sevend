@@ -5,7 +5,7 @@
     justify-center
   >
     <v-flex xs9>
-      <!-- <v-subheader>Imported</v-subheader> -->
+      <v-subheader>Imported</v-subheader>
       <v-card>
         <v-list two-line>
           <v-list-tile

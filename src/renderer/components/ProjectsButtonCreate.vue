@@ -17,6 +17,7 @@
   import fs from 'fs'
   import Future from 'fluture'
   import yaml from 'js-yaml'
+  import { ValidationError } from 'lib/error'
 
   const { dialog, getCurrentWindow } = remote
 
@@ -64,6 +65,21 @@
     _.assoc('project_name')
   )
 
+  /** `pluckContains :: String k => k -> a -> [{ k: a }] -> Boolean` */
+  const pluckContains = prop => item =>
+    _.pipe(_.pluck(prop), _.contains(item))
+
+  /**
+   * `guardDuplicatedPath :: [Project] -> Project -> Future ValidationError Project`
+   *
+   * `type Project = { project_path: String, ... }`
+   */
+  const guardDuplicatedPath = projects => data =>
+    pluckContains('project_path')(data.project_path)(projects)
+    ? Future.reject(new ValidationError(
+      'Selected path is used by other project!'))
+    : Future.of(data)
+
   export default {
     name: 'ProjectsButtonCreate',
     methods: {
@@ -73,6 +89,7 @@
           loadComposeConfig(composePath)
           .map(addProjectPath(composePath))
           .map(addProjectName(composePath)))
+        .chain(guardDuplicatedPath(this.$store.state.appProjects))
         .fork(e => this.$emit('import-error', e),
               v => {
                 this.$emit('import-success', 'Project has been imported')
