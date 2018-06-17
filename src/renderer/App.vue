@@ -1,13 +1,6 @@
 <template>
   <v-app class="unselectable">
-    <v-navigation-drawer
-      app
-      clipped
-      width="250"
-      style="z-index: 3"
-      :permanent="menu"
-    >
-    </v-navigation-drawer>
+    <the-side-bar :visible="menu"/>
     <v-toolbar
       app
       clipped-left
@@ -47,7 +40,8 @@
     name: 'App',
     components: {
       ProjectsButtonCreate: require('@/components/ProjectsButtonCreate').default,
-      ProjectsList: require('@/components/ProjectsList').default
+      ProjectsList: require('@/components/ProjectsList').default,
+      TheSideBar: require('@/components/TheSideBar').default
     },
     data: () => ({
       menu: false,
