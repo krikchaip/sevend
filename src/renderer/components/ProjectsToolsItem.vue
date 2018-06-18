@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn icon>
+    <v-btn icon @click="refreshButtonClick">
       <v-icon>mdi-refresh</v-icon>
     </v-btn>
     <projects-button-unbind
@@ -11,6 +11,8 @@
 </template>
 
 <script>
+  import _ from 'ramda'
+  import { loadComposeConfig } from 'lib/utils'
   import { mapState } from 'vuex'
 
   export default {
@@ -23,8 +25,24 @@
     },
     computed: {
       ...mapState({
+        project({ appProjects }) { return appProjects[this.idx] },
         project_name({ appProjects }) { return appProjects[this.idx].project_name }
       })
+    },
+    methods: {
+      refreshButtonClick() {
+        let metaData = _.pick(
+          ['compose_path', 'project_path', 'project_name'],
+          this.project
+        )
+        loadComposeConfig(metaData.compose_path)
+        .map(_.mergeDeepRight(metaData))
+        .fork(
+          ({ message }) =>
+            this.$store.dispatch('notify', { message, duration: 0 }),
+          value =>
+            this.$store.dispatch('projects/update', { idx: this.idx, value }))
+      }
     }
   }
 </script>

@@ -14,6 +14,10 @@ export default {
       await dispatch('_set', rootState.appProjects.concat([ projectDetail ]))
       console.log(rootState.appProjects)
     },
+    async update({ dispatch, rootState }, { idx, value }) {
+      await dispatch('_set', _.update(idx, value, rootState.appProjects))
+      console.log(rootState.appProjects)
+    },
     async unbind({ dispatch, rootState }, idx) {
       await dispatch('_set', _.remove(idx, 1, rootState.appProjects))
       console.log(rootState.appProjects)
