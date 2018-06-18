@@ -13,11 +13,10 @@
 
 <script>
   import _ from 'ramda'
+  import { loadComposeConfig } from 'lib/utils'
   import { remote } from 'electron'
-  import fs from 'fs'
-  import Future from 'fluture'
-  import yaml from 'js-yaml'
   import { ValidationError } from 'lib/error'
+  import Future from 'fluture'
 
   const { dialog, getCurrentWindow } = remote
 
@@ -32,23 +31,6 @@
       !!paths && res(paths[0])
     })
   })
-
-  /**
-   * `readFileM :: Path -> Options -> Future e Buffer`
-   *
-   * ps. "Path" and "Options" are from fs.readFile
-   */
-  const readFileM = Future.encaseN2(fs.readFile)
-
-  /** `parseYaml :: String -> Future YAMLException Object` */
-  const parseYaml = s =>
-    Future.encase(yaml.safeLoad, s)
-    .mapRej(_.assoc('message', 'Compose file corrupted'))
-
-  /** `loadComposeConfig :: String -> Future e Object` */
-  const loadComposeConfig = composePath =>
-    readFileM(composePath, 'utf8')
-    .chain(parseYaml)
 
   /** `addProjectPath :: String -> Object -> Object` */
   const addProjectPath = _.pipe(
@@ -87,6 +69,7 @@
         openComposeFileDialog
         .chain(composePath =>
           loadComposeConfig(composePath)
+          .map(_.assoc('compose_path', composePath))
           .map(addProjectPath(composePath))
           .map(addProjectName(composePath)))
         .chain(guardDuplicatedPath(this.$store.state.appProjects))
