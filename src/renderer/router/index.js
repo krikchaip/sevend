@@ -22,8 +22,8 @@ export default new Router({
     },
     props: {
       default: false,
-      title: true,
-      tools: false
+      title: ({ params }) => ({ idx: Number(params.idx) }),
+      tools: ({ params }) => ({ idx: Number(params.idx) })
     }
   }, {
     path: '/',
