@@ -11,8 +11,7 @@
           <v-list-tile
             v-for="(data, idx) of $store.state.appProjects"
             :key="idx"
-            replace
-            :to="{ name: 'projects-item', params: { idx } }"
+            @click="$router.replace({ name: 'projects-item', params: { idx } })"
           >
             <v-list-tile-avatar>
               <v-icon class="blue lighten-2 white--text">mdi-docker</v-icon>
@@ -22,7 +21,7 @@
               <v-list-tile-sub-title>{{ data.project_path }}</v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-action>
-              <v-btn icon ripple @click="openFolder(data.project_path)">
+              <v-btn icon ripple @click.stop="openFolder(data.project_path)">
                 <v-icon color="grey lighten-1">mdi-folder-open</v-icon>
               </v-btn>
             </v-list-tile-action>
@@ -42,7 +41,9 @@
       ProjectsEmptyState: require('@/components/ProjectsEmptyState').default
     },
     methods: {
-      openFolder(path) { shell.openItem(path) }
+      openFolder(path) {
+        shell.openItem(path)
+      }
     }
   }
 </script>
