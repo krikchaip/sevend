@@ -9,6 +9,7 @@ export default {
       let appProjects = rootState.appProjects.concat([ projectDetail ])
       G('data').set('appProjects', appProjects)
       commit('SET_PROJECTS', appProjects, { root: true })
+      console.log(rootState.appProjects)
     }
   }
 }

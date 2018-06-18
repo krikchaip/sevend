@@ -35,32 +35,28 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+
   export default {
     name: 'App',
     components: {
       TheSideBar: require('@/components/TheSideBar').default
     },
     data: () => ({
-      menu: false,
-      notifyMessage: null,
-      snackbar: false,
-      snackbarTimeout: 0
+      menu: false
     }),
+    computed: {
+      ...mapState({
+        snackbarTimeout: ({ appSnackbar }) => appSnackbar.duration,
+        notifyMessage: ({ appSnackbar }) => appSnackbar.message
+      }),
+      snackbar: {
+        get() { return this.$store.state.appSnackbar.active },
+        set(v) { this.$store.commit('SET_SNACKBAR_ACTIVE', v) }
+      }
+    },
     created() {
       this.$store.dispatch('init')
-    },
-    methods: {
-      notifyError({ message, name }) {
-        console.error(message)
-        this.notifyMessage = message
-        this.snackbarTimeout = 0
-        this.snackbar = true
-      },
-      notifySuccess(message) {
-        this.notifyMessage = message
-        this.snackbarTimeout = 3000
-        this.snackbar = true
-      }
     }
   }
 </script>
