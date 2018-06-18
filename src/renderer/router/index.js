@@ -19,6 +19,11 @@ export default new Router({
       default: require('@/components/ProjectsItem').default,
       title: require('@/components/ProjectsTitleItem').default,
       tools: require('@/components/ProjectsToolsItem').default
+    },
+    props: {
+      default: false,
+      title: true,
+      tools: false
     }
   }, {
     path: '/',

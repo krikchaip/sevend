@@ -1,7 +1,29 @@
 <template>
   <div class="d-flex">
-    <span style="cursor: pointer" @click="">Projects</span>
+    <router-link
+      replace
+      style="cursor: pointer"
+      tag="span"
+      to="/projects"
+    >
+      Projects
+    </router-link>
     <v-icon class="mx-1">mdi-chevron-right</v-icon>
-    <span>{{ $route.params.idx }}</span>
+    <span>{{ data.project_name }}</span>
   </div>
 </template>
+
+<script>
+  import { mapState } from 'vuex'
+
+  export default {
+    name: 'ProjectsTitleItem',
+    props: {
+      idx: { type: Number, required: true }
+    },
+    computed: mapState({
+      data(state) { return state.appProjects[this.idx] }
+    })
+  }
+</script>
+

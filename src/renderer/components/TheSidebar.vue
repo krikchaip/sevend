@@ -7,7 +7,7 @@
     :permanent="visible"
   >
     <v-list>
-      <v-list-tile @click="">
+      <v-list-tile active-class replace to="/projects">
         <v-list-tile-avatar>
           <v-icon color="primary">mdi-folder-multiple</v-icon>
         </v-list-tile-avatar>
@@ -22,8 +22,6 @@
     name: 'TheSideBar',
     props: {
       visible: Boolean
-    },
-    data: () => ({
-    })
+    }
   }
 </script>
