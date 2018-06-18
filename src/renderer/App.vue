@@ -11,26 +11,25 @@
       <v-toolbar-side-icon @click="menu = !menu">
         <v-icon>mdi-menu</v-icon>
       </v-toolbar-side-icon>
-      <v-toolbar-title>Projects</v-toolbar-title>
+      <v-toolbar-title>
+        <router-view name="title"/>
+      </v-toolbar-title>
       <v-spacer/>
-      <projects-button-create
-        @import-error="notifyError"
-        @import-success="notifySuccess"
-      />
+      <router-view class="ma-0" name="tools"/>
     </v-toolbar>
     <v-content>
       <v-container fill-height>
-        <projects-list/>
-        <v-snackbar
-          v-model="snackbar"
-          bottom
-          right
-          :timeout="snackbarTimeout"
-        >
-          {{ notifyMessage }}
-          <v-btn flat color="pink accent-2" @click.native="snackbar = false">Close</v-btn>
-        </v-snackbar>
+        <router-view/>
       </v-container>
+      <v-snackbar
+        v-model="snackbar"
+        bottom
+        right
+        :timeout="snackbarTimeout"
+      >
+        {{ notifyMessage }}
+        <v-btn flat color="pink accent-2" @click.native="snackbar = false">Close</v-btn>
+      </v-snackbar>
     </v-content>
   </v-app>
 </template>
@@ -39,8 +38,6 @@
   export default {
     name: 'App',
     components: {
-      ProjectsButtonCreate: require('@/components/ProjectsButtonCreate').default,
-      ProjectsList: require('@/components/ProjectsList').default,
       TheSideBar: require('@/components/TheSideBar').default
     },
     data: () => ({

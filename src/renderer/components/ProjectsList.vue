@@ -11,7 +11,8 @@
           <v-list-tile
             v-for="(data, idx) of $store.state.appProjects"
             :key="idx"
-            @click=""
+            replace
+            :to="{ name: 'projects-item', params: { idx } }"
           >
             <v-list-tile-avatar>
               <v-icon class="blue lighten-2 white--text">mdi-docker</v-icon>
