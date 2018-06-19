@@ -3,9 +3,13 @@ import axios from 'axios'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
 
+import VueJsonPretty from 'vue-json-pretty'
+
 import App from './App'
 import router from './router'
 import store from './store'
+
+Vue.component('vue-json-pretty', VueJsonPretty)
 
 Vue.use(Vuetify)
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
