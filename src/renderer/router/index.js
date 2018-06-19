@@ -21,7 +21,7 @@ export default new Router({
       tools: require('@/components/ProjectsToolsItem').default
     },
     props: {
-      default: false,
+      default: ({ params }) => ({ idx: Number(params.idx) }),
       title: ({ params }) => ({ idx: Number(params.idx) }),
       tools: ({ params }) => ({ idx: Number(params.idx) })
     }

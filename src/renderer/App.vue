@@ -18,9 +18,7 @@
       <router-view class="ma-0" name="tools"/>
     </v-toolbar>
     <v-content>
-      <v-container fill-height>
-        <router-view/>
-      </v-container>
+      <router-view/>
       <v-snackbar
         v-model="snackbar"
         bottom

@@ -3,6 +3,9 @@
     <v-btn icon @click="refreshButtonClick">
       <v-icon>mdi-refresh</v-icon>
     </v-btn>
+    <v-btn icon @click="openFolder(project.project_path)">
+      <v-icon>mdi-folder-open</v-icon>
+    </v-btn>
     <projects-button-unbind
       :name="project_name"
       :unbind-project="() => $store.dispatch('projects/unbind', idx)"
@@ -14,6 +17,7 @@
   import _ from 'ramda'
   import { loadComposeConfig } from 'lib/utils'
   import { mapState } from 'vuex'
+  import { shell } from 'electron'
 
   export default {
     name: 'ProjectsToolsItem',
@@ -42,6 +46,9 @@
             this.$store.dispatch('notify', { message, duration: 0 }),
           value =>
             this.$store.dispatch('projects/update', { idx: this.idx, value }))
+      },
+      openFolder(path) {
+        shell.openItem(path)
       }
     }
   }
