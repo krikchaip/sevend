@@ -5,8 +5,8 @@
       app
       clipped-left
       dark
-      color="primary"
       height="56"
+      :color="determineColorFromRoute"
     >
       <v-toolbar-side-icon @click="menu = !menu">
         <v-icon>mdi-menu</v-icon>
@@ -40,17 +40,30 @@
     components: {
       TheSideBar: require('@/components/TheSideBar').default
     },
-    data: () => ({
-      menu: false
-    }),
     computed: {
       ...mapState({
         snackbarTimeout: ({ appSnackbar }) => appSnackbar.duration,
-        notifyMessage: ({ appSnackbar }) => appSnackbar.message
+        notifyMessage: ({ appSnackbar }) => appSnackbar.message,
       }),
+      menu: {
+        get() { return this.$store.state.appMenu },
+        set(v) { this.$store.commit('SET_APP_MENU', v) }
+      },
       snackbar: {
         get() { return this.$store.state.appSnackbar.active },
         set(v) { this.$store.commit('SET_SNACKBAR_ACTIVE', v) }
+      },
+      determineColorFromRoute() {
+        switch (this.$route.name) {
+          case 'projects':
+            return 'primary'
+          case 'projects-item':
+            return 'primary'
+          case 'monitor':
+            return 'teal'
+          default:
+            return 'primary'
+        }
       }
     },
     created() {

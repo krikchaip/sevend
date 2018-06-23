@@ -21,6 +21,20 @@
                 <v-list-tile-title>{{ data.project_name }}</v-list-tile-title>
                 <v-list-tile-sub-title>{{ data.project_path }}</v-list-tile-sub-title>
               </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn
+                  v-if="
+                    $store.state.appMonitoring[data.project_name]
+                    ? $store.state.appMonitoring[data.project_name].isRunning
+                    : false
+                  "
+                  icon flat
+                  color="error"
+                  @click.stop="$store.dispatch('monitor/compose_down', data)"
+                >
+                  <v-icon>mdi-stop-circle-outline</v-icon>
+                </v-btn>
+              </v-list-tile-action>
             </v-list-tile>
           </v-list>
         </v-card>

@@ -1,5 +1,12 @@
 <template>
   <div>
+    <v-btn
+      icon
+      :disabled="project_instance && project_instance.isRunning"
+      @click="startProject"
+    >
+      <v-icon>mdi-play</v-icon>
+    </v-btn>
     <v-btn icon @click="refreshButtonClick">
       <v-icon>mdi-refresh</v-icon>
     </v-btn>
@@ -30,7 +37,8 @@
     computed: {
       ...mapState({
         project({ appProjects }) { return appProjects[this.idx] },
-        project_name({ appProjects }) { return appProjects[this.idx].project_name }
+        project_name({ appProjects }) { return appProjects[this.idx].project_name },
+        project_instance({ appMonitoring }) { return appMonitoring[this.project_name] }
       })
     },
     methods: {
@@ -49,6 +57,10 @@
       },
       openFolder(path) {
         shell.openItem(path)
+      },
+      async startProject() {
+        await this.$store.dispatch('monitor/compose_up', this.project)
+        this.$router.replace('/monitor')
       }
     }
   }

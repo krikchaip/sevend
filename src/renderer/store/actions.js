@@ -6,6 +6,7 @@ export default {
   async init({ commit, state }) {
     commit('SET_PROJECTS', G('data').get('appProjects'))
     console.log(state.appProjects)
+    window.PROJECT = {}
   },
   async notify({ commit }, { message, duration }) {
     commit('SET_SNACKBAR_MESSAGE', message)

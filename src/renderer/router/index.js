@@ -26,6 +26,14 @@ export default new Router({
       tools: ({ params }) => ({ idx: Number(params.idx) })
     }
   }, {
+    path: '/monitor',
+    name: 'monitor',
+    components: {
+      default: require('@/components/MonitorPage').default,
+      title: { template: `<span>Monitor</span>` },
+      tools: require('@/components/MonitorTools').default
+    }
+  }, {
     path: '/',
     redirect: '/projects'
   }]
